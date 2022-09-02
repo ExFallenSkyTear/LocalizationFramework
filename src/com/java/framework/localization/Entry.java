@@ -1,13 +1,13 @@
 package com.java.framework.localization;
 
-public class LocalizationEntry {
+public class Entry {
     private final String name;
 
     private final String defaultValue;
 
     private String value;
 
-    LocalizationEntry(String name, String defaultValue) {
+    Entry(String name, String defaultValue) {
         this.name = name;
         this.defaultValue = defaultValue;
     }

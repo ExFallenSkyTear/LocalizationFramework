@@ -1,7 +1,7 @@
-import com.java.framework.localization.LocalizationManager;
+import com.java.framework.localization.Manager;
 
 public class Main {
-    public LocalizationManager globalLocalization = new LocalizationManager();
+    public Manager globalLocalization = new Manager();
 
     public static void main(String[] args) {
 
