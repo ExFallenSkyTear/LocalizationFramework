@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class Manager {
     private final ArrayList<Category> localizationCategories = new ArrayList<>();
 
+    private String languageTag = "default";
+
     public Category createCategory(String categoryName) throws Exception {
         if (!this.categoryExist(categoryName)) {
             Category newCategory = new Category(categoryName);
@@ -26,5 +28,13 @@ public class Manager {
             if (localizationCategories.get(i).getName() == categoryName) return i;
         }
         return -1;
+    }
+
+    private void setLanguageTag(String languageTag) {
+        this.languageTag = languageTag;
+    }
+
+    public String getLanguageTag() {
+        return this.languageTag;
     }
 }
