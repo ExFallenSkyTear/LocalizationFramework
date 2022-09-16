@@ -42,10 +42,6 @@ public class Manager {
         return this.localizationCategories.get(this.getCategoryIndex(categoryName));
     }
 
-    public String quickRead(String categoryName, String entryName) {
-        return this.getCategory(categoryName).getEntry(entryName).getValue();
-    }
-
     public boolean categoryExist(String categoryName) {
         return getCategoryIndex(categoryName) >= 0;
     }
@@ -102,5 +98,53 @@ public class Manager {
         StreamResult result = new StreamResult(outputStream);
 
         transformer.transform(source, result);
+    }
+
+    public void importConfiguration(String fullFilePath) {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+
+        try {
+            dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+
+            DocumentBuilder db = dbf.newDocumentBuilder();
+
+            Document doc = db.parse(new File(fullFilePath));
+
+            doc.getDocumentElement().normalize();
+
+            NodeList importCategories = doc.getDocumentElement().getChildNodes();
+            Node importCategory;
+            String importCategoryName;
+
+            Category targetCategory;
+
+            NodeList importEntries;
+            Node importEntry;
+            String importEntryName;
+
+            for (int i = 0; i < importCategories.getLength(); i++) {
+                importCategory = importCategories.item(i);
+                importCategoryName = importCategory.getNodeName();
+
+                if (this.categoryExist(importCategoryName)) {
+                    targetCategory = this.getCategory(importCategoryName);
+                    importEntries = importCategories.item(i).getChildNodes();
+
+                    for (int x = 0; x < importEntries.getLength(); x++) {
+                        importEntry = importEntries.item(x);
+                        importEntryName = importEntry.getNodeName();
+
+                        if (targetCategory.entryExist(importEntryName)) {
+                            targetCategory.getEntry(importEntryName).setValue(
+                                    importEntry.getAttributes().getNamedItem("value").getNodeValue()
+                            );
+                        }
+                    }
+                }
+            }
+
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }

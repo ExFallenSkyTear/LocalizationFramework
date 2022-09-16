@@ -15,11 +15,13 @@ public class Main {
                 planetEarth.getValue()
         );
 
-        System.out.printf("%s %s!%n",
-                globalLocalization.quickRead("Misc", "informalGreetings"),
-                globalLocalization.quickRead("Misc", "planetEarth")
-        );
+        //globalLocalization.exportDefaults("c:\\tmp\\");
 
-        globalLocalization.exportDefaults("c:\\tmp\\");
+        globalLocalization.importConfiguration("c:\\tmp\\test.xml");
+
+        System.out.printf("%s %s!%n",
+                informalGreetings.getValue(),
+                planetEarth.getValue()
+        );
     }
 }

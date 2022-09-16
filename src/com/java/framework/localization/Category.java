@@ -18,7 +18,7 @@ public class Category {
         return this.name;
     }
 
-    public Entry createEntry(String entryName, String defaultValue) throws Exception {
+    public Entry createEntry(String entryName, String defaultValue) {
         if (!this.entryExist(entryName)) {
             Entry newEntry = new Entry(entryName, defaultValue);
             categoryEntries.add(newEntry);
