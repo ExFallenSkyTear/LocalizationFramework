@@ -2,6 +2,9 @@ package com.java.framework.localization;
 
 import java.util.ArrayList;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 public class Category {
     private final ArrayList<Entry> categoryEntries = new ArrayList<>();
 
@@ -36,5 +39,14 @@ public class Category {
             if (categoryEntries.get(i).getName() == entryName) return i;
         }
         return -1;
+    }
+
+    public void addToXml(Document sourceDocument, Element sourceElement){
+        Element localNode = sourceDocument.createElement(this.name);
+        sourceElement.appendChild(localNode);
+
+        for (Entry categoryEntry : categoryEntries) {
+            categoryEntry.addToXml(sourceDocument, localNode);
+        }
     }
 }
